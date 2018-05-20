@@ -29,16 +29,17 @@ componentDidMount() {
     let data=[]
 	if (user) {
         //   console.log(this.props.match.params.uid)
+    
      this.setState({uid:this.props.match.params.uid})  
           ref.child(`users/${this.props.match.params.uid}`).on('value',res=>{
-              data=[]
+            data=[];
             res.forEach(shot => {
                 let key = shot.key
                 let value = shot.val()
-                console.log(key ,value)
+                // console.log(key ,value)
                 data.push(shot.val()) 
             })
-            console.log(data)
+            // console.log(data)
            this.setState({data:data})
         })
        
