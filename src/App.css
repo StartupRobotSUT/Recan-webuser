@@ -37,3 +37,14 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+@media only screen and (max-width: 500px) {
+    .bg{
+      margin-top: 20%;
+      width: 80%;
+      height: 70%;
+    }
+    .enter_site{
+      font-size: 15px;
+      text-align: center;
+    }
+}
