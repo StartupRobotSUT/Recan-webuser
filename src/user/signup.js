@@ -37,7 +37,8 @@ haadleInputChange(event){
        let error ={}
        let { student_id,password} =this.state
        if(this.state.student_id==="") error.student_id ="! student is empty";
-       if(this.state.student_id.toLocaleUpperCase()[0]!='B')error.student_id ="! student not format";
+       if(this.state.student_id.toLocaleUpperCase()[0]!=='B')error.student_id ="! student not format";
+       if(this.state.student_id.length!==8)error.student_id ="! student not format";
        if(this.state.password==="")error.password="! password is empty";
        if(this.state.password.length<6)error.password="! password is short";
        if(this.state.fullname==="")error.fullname="! fullname is empty";

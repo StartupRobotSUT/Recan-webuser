@@ -80,14 +80,13 @@
     
     }
 }
-@media only screen and (max-width: 600px) {
+/* @media only screen and (max-width: 600px) {
     .logo_login{
-        /* padding-top: 10%; */
         margin-left: 0%;
         margin-right: 0%;
     }
-}
-@media only screen and (max-width: 400px) {
+} */
+@media only screen and (max-width: 600px) {
     .layout_login{
         width: 70%;
         margin-left: 15%;
@@ -108,7 +107,7 @@
         margin-top: 0%;
         margin-left:10%;
         margin-right:10%;
-        margin-top: 10%;
+        margin-top: 15%;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     }
     .title_detail{
@@ -118,3 +117,54 @@
     
     }
 }
+@media only screen and (min-width: 600px) {
+
+} 
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {} 
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    .logo_profile{
+        margin-left:40%;
+        margin-right:30%;
+    }
+    .layout_profile{
+        text-align: center;
+        width: 80%;
+        margin-top: 20%;
+        margin-left:10%;
+        margin-right:10%;
+        margin-top: 10%;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+    .title_detail{
+        font-size: 25px;
+        font: bold;
+        color: darkslategray;
+    
+    }
+} 
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+    .logo_profile{
+        margin-left:40%;
+        margin-right:30%;
+    }
+    .layout_profile{
+        text-align: center;
+        width: 80%;
+        margin-top: 20%;
+        margin-left:10%;
+        margin-right:10%;
+        margin-top: 1%;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+    .title_detail{
+        font-size: 25px;
+        font: bold;
+        color: darkslategray;
+    }
+}
+

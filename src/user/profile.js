@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 import './user.css'
 import firebase from 'firebase'
 import {ref} from '../config/firebase'
@@ -25,17 +25,15 @@ SignOut(){
 }
 componentDidMount() {
     let user = firebase.auth().currentUser;
-    let than = this   
+    // let than = this   
     let data=[]
 	if (user) {
-        //   console.log(this.props.match.params.uid)
-    
      this.setState({uid:this.props.match.params.uid})  
           ref.child(`users/${this.props.match.params.uid}`).on('value',res=>{
             data=[];
             res.forEach(shot => {
-                let key = shot.key
-                let value = shot.val()
+                // let key = shot.key
+                // let value = shot.val()
                 // console.log(key ,value)
                 data.push(shot.val()) 
             })
@@ -64,13 +62,13 @@ componentDidMount() {
                 <i className="fas fa-user"></i><b>&nbsp;&nbsp;Full Name&nbsp;&nbsp;</b><b>{data[1]}</b>
             </div>
             <div className="title_detail">
-                    <i class="fas fa-star"></i><b>&nbsp;&nbsp;Points&nbsp;&nbsp;</b>{data[3]} <b>&nbsp;&nbsp;&nbsp;point</b>
+                    <i className="fas fa-star"></i><b>&nbsp;&nbsp;Points&nbsp;&nbsp;</b>{data[3]} <b>&nbsp;&nbsp;&nbsp;point</b>
             </div>
             <div className="title_detail">
-            <i class="fas fa-money-bill-alt"></i><b>&nbsp;&nbsp;Cash&nbsp;&nbsp;</b>{data[0]}<b>&nbsp;&nbsp;&nbsp;THB</b>
+            <i className="fas fa-money-bill-alt"></i><b>&nbsp;&nbsp;Cash&nbsp;&nbsp;</b>{data[0]}<b>&nbsp;&nbsp;&nbsp;THB</b>
             </div>
             <div className="title_detail">
-                <i class="fas fa-clock"></i><b>&nbsp;&nbsp;Hours&nbsp;&nbsp;</b>{data[2]} <b>&nbsp;&nbsp;&nbsp;H</b>
+                <i className="fas fa-clock"></i><b>&nbsp;&nbsp;Hours&nbsp;&nbsp;</b>{data[2]} <b>&nbsp;&nbsp;&nbsp;H</b>
             </div>
         </div>
          </div>

@@ -35,8 +35,10 @@ handleClick(){
    let error ={}
    let { student_id,password} =this.state
    if(this.state.student_id==="") error.student_id ="! student is empty";
-   if(this.state.student_id.toLocaleUpperCase()[0]!='B')error.student_id ="! student not format";
+   if(this.state.student_id.toLocaleUpperCase()[0]!=='B')error.student_id ="! student not format";
+   if(this.state.student_id.length!==8)error.student_id ="! student not format";
    if(this.state.password==="")error.password="! password is empty";
+   if(this.state.password.length<6)error.password="! password is short"
    this.setState({error})
 //    console.log(`${this.state.student_id}@recan.ac.th`)
 //      toLowerCase();
@@ -99,7 +101,7 @@ handleClick(){
 	 			    <a  className="button is-info" onClick={this.handleClick}><b>LOGIN</b></a>
 	 			</p>
 				 <p className="field" style={{textAlign:'center'}}>
-	 			<Link to={'/signup'} ><a><u>Sing Up</u></a></Link>
+	 			<Link to={'/signup'} ><a><u>Sign Up</u></a></Link>
 				 </p>
 	 		</div>
 	 		)
