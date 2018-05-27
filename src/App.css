@@ -21,6 +21,7 @@
   height: 80px;
 }
 .foots{
+  background-color: hsl(0, 0%, 96%);
   padding-top: 2%;
   text-align: center;
   width: 790px;
@@ -37,11 +38,9 @@
   padding: 20px;
   color: white;
 }
-
 .App-title {
   font-size: 1.5em;
 }
-
 .App-intro {
   font-size: large;
 }
@@ -76,6 +75,7 @@
     margin-bottom: 4%;
   }
   .foots{
+    background-color: hsl(0, 0%, 96%);
     width: 70%;
     height: 50%;
     margin-left:15%;

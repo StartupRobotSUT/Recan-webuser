@@ -3,6 +3,7 @@ import './user.css'
 import {ref} from '../config/firebase'
 import {authEmail} from '../config/user_manage'
 import {Link,Redirect} from 'react-router-dom'
+let url_logo = require('../img/logo.jpg')
 class Signup extends React.Component{
     constructor(props){
         super(props)
@@ -11,6 +12,8 @@ class Signup extends React.Component{
             password:'',
             error:{},
             fullname:'',
+            type:'',
+            typer:['สถานะผู้ใช้งาน','นักศึกษา','บุคลากร','อาจารย์'],
             done:false
         }
         this.haadleInputChange = this.haadleInputChange.bind(this)
@@ -36,12 +39,15 @@ haadleInputChange(event){
     handleClick(){
        let error ={}
        let { student_id,password} =this.state
-       if(this.state.student_id==="") error.student_id ="! student is empty";
-       if(this.state.student_id.toLocaleUpperCase()[0]!=='B')error.student_id ="! student not format";
-       if(this.state.student_id.length!==8)error.student_id ="! student not format";
+       if(this.state.student_id.trim()==="") error.student_id ="! student is empty";
+       if(this.state.type==="นักศึกษา"&&this.state.student_id.toLocaleUpperCase()[0]!=='B')error.student_id ="! student not format";
+       if(this.state.type==="นักศึกษา"&&this.state.student_id.length!==8)error.student_id ="! student not format";
        if(this.state.password==="")error.password="! password is empty";
-       if(this.state.password.length<6)error.password="! password is short";
-       if(this.state.fullname==="")error.fullname="! fullname is empty";
+       if(this.state.type!=="นักศึกษา"&&this.state.student_id.length<5)error.student_id="! username shorted!!"
+       if(this.state.password.length<6)error.password="! password is short (6-10)";
+       if(this.state.fullname.trim()==="")error.fullname="! fullname is empty";
+       if(this.state.type==="สถานะผู้ใช้งาน")error.type="! type not select";
+       if(this.state.type==="")error.type="! type not select";
        this.setState({error})
     //    console.log(`${this.state.student_id}@recan.ac.th`)
     //      toLowerCase();
@@ -50,10 +56,11 @@ haadleInputChange(event){
            let email = `${student_id.trim().toLocaleUpperCase()}@recan.ac.th`
         authEmail(email,password).then(user=>{
             ref.child(`users/${this.state.student_id.trim().toLocaleUpperCase()}`).set({
-                fullname:this.state.fullname,
+                fullname:this.state.fullname.trim(),
                 cash:0,
                 hours:0,
-                point:0
+                point:0,
+                type:this.state.type
             }).then(()=>{
                 console.log("Sign SCCUSS!!")
                 this.setState({done:true})
@@ -75,11 +82,36 @@ haadleInputChange(event){
                 this.setState({error})
             }
        })
-       }
-      
-     }
+    }
+}
     render(){
-        let url_logo = require('../img/logo.jpg')
+       const typer = this.state.typer.map((type)=>(
+          <option>{type}</option>
+       )) 
+       const student = (
+        <p className="field is-center">
+        <input  className="input is-success"
+                type="text" 
+               name="student_id"
+               value={this.state.student_id}
+               placeholder="StudentID"
+               onChange={this.haadleInputChange}
+                   />			 
+       <span className="noti">{this.state.error.student_id}</span>
+    </p>
+       )
+       const ohter = (
+        <p className="field is-center">
+        <input  className="input is-success"
+                type="text" 
+               name="student_id"
+               value={this.state.student_id}
+               placeholder="Username"
+               onChange={this.haadleInputChange}
+                   />			 
+       <span className="noti">{this.state.error.student_id}</span>
+    </p>
+       )
         const Signup = (
             <div className="layout_login">
             <div className="logo_login">
@@ -98,17 +130,21 @@ haadleInputChange(event){
 	 				   		/>			 
                     <span className="noti">{this.state.error.fullname}</span>
 	 			</p>
-	 			<p className="field is-center">
-	 				<input  className="input is-success"
-	 				    	type="text" 
-                            name="student_id"
-                            value={this.state.student_id}
-                            placeholder="Enter Student ID"
-                            onChange={this.haadleInputChange}
-	 				   		/>			 
-                    <span className="noti">{this.state.error.student_id}</span>
-	 			</p>
-				
+                 <p className="field is-center" >
+                    <div className="sle select is-primary">
+                      <div>
+                            <select className="sle" 
+                              name='type'
+                              value={this.state.type}
+                              onChange={this.haadleInputChange}
+                            >
+                                {typer}
+                            </select>
+                        </div>
+                    </div> 
+                    <span className="noti">{this.state.error.type}</span>
+                </p>
+	 			{this.state.type==="นักศึกษา"?student:ohter}
 	 			<p className="field" >
 	 				<input 	className="input is-success"
 	 				        type="password" 
@@ -130,7 +166,7 @@ haadleInputChange(event){
         )
         return(
             <div>
-                {this.state.done?<Redirect  to={`/user/profile/${this.state.student_id}`}/>:Signup}            </div>
+                {this.state.done?<Redirect  to={`/user/profile/${this.state.student_id.trim()}`}/>:Signup}            </div>
         )
     }
 }

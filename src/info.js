@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import {Link} from 'react-router-dom'
 import './App.css';
 import Footer from './footer'
+let url_bg = require('./img/bg.jpg')
+let info1 = require('./img/info.jpg')
+let info2 = require('./img/info_2.jpg')
 class Info extends Component {
   getChildContext() {
       return {value: "purple"};
@@ -13,9 +16,6 @@ class Info extends Component {
     }
   }
   render() {
-    let url_bg = require('./img/bg.jpg')
-    let info1 = require('./img/info.jpg')
-    let info2 = require('./img/info_2.jpg')
     return (
       <div>
              {/* <h1>Recan</h1> */}

@@ -2,6 +2,7 @@ import React from 'react'
 import {Link,Redirect} from 'react-router-dom'
 import './user.css'
 import {singInEmail} from '../config/user_manage'
+let url_logo = require('../img/logo.jpg')
 class Login extends React.Component{
     constructor(props){
       super(props)
@@ -35,8 +36,8 @@ handleClick(){
    let error ={}
    let { student_id,password} =this.state
    if(this.state.student_id==="") error.student_id ="! student is empty";
-   if(this.state.student_id.toLocaleUpperCase()[0]!=='B')error.student_id ="! student not format";
-   if(this.state.student_id.length!==8)error.student_id ="! student not format";
+//    if(this.state.student_id.toLocaleUpperCase()[0]!=='B')error.student_id ="! student not format";
+//    if(this.state.student_id.length!==8)error.student_id ="! student not format";
    if(this.state.password==="")error.password="! password is empty";
    if(this.state.password.length<6)error.password="! password is short"
    this.setState({error})
@@ -45,13 +46,13 @@ handleClick(){
    const inValid = Object.keys(error).length===0
    if(inValid){
        let email = `${student_id.trim().toLocaleUpperCase()}@recan.ac.th`
-    singInEmail(email,password).then(user=>{
+    singInEmail(email,password.trim()).then(user=>{
         console.log("LOGIN SCCUSS!!")
         this.setState({done:true})
         //   console.log(user.user.uid)
     }).catch(err=>{
         let error ={}
-        error.password="password or student id match";
+        error.password="password or username id match";
         this.setState({error})
         if(err.code==='')
         	console.log("logined")
@@ -65,7 +66,7 @@ handleClick(){
   
  }
     render(){
-        let url_logo = require('../img/logo.jpg')
+       
         const Form =(
 	 	   <div className="layout_login">
             <div className="logo_login">
@@ -80,7 +81,7 @@ handleClick(){
 	 				    	type="text" 
                             name="student_id"
                             value={this.state.student_id}
-                            placeholder="Enter Student ID"
+                            placeholder="StudenID or Username"
                             onChange={this.haadleInputChange}
 	 				   		/>			 
                     <span className="noti">{this.state.error.student_id}</span>
@@ -107,7 +108,7 @@ handleClick(){
 	 		)
         return(
             <div className="login">
-                {this.state.done?<Redirect to={`/user/profile/${this.state.student_id}`}/>:Form}
+                {this.state.done?<Redirect to={`/user/profile/${this.state.student_id.trim()}`}/>:Form}
                
             </div>
         )

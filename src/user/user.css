@@ -15,6 +15,14 @@
     margin-right:37.5%;
      /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
 }
+.sle{
+    width: 500px;
+}
+.title_profile{
+    font-size: 50px;
+    font: bold;
+    color: darkslategray;
+}
 .detail{
     padding-top: 5%;
     padding-bottom: 10%;
@@ -103,10 +111,10 @@
     }
     .layout_profile{
         text-align: center;
-        width: 80%;
+        width: 90%;
         margin-top: 0%;
-        margin-left:10%;
-        margin-right:10%;
+        margin-left:5%;
+        margin-right:5%;
         margin-top: 15%;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     }
@@ -115,6 +123,17 @@
         font: bold;
         color: darkslategray;
     
+    }
+    .noti{
+        float: left;
+        color: red;
+        font: bold;
+        font-size: 12px;
+    }
+    .title_profile{
+        font-size: 22px;
+        font: bold;
+        color: darkslategray;
     }
 }
 @media only screen and (min-width: 600px) {

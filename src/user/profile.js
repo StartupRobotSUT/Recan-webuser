@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 // import PropTypes from 'prop-types'
 import './user.css'
+
 import firebase from 'firebase'
 import {ref} from '../config/firebase'
 import {signOut} from '../config/user_manage'
+
 class Profile extends Component {
 constructor(props){
     super(props)
@@ -29,12 +31,12 @@ componentDidMount() {
     let data=[]
 	if (user) {
      this.setState({uid:this.props.match.params.uid})  
-          ref.child(`users/${this.props.match.params.uid}`).on('value',res=>{
+          ref.child(`users/${this.props.match.params.uid.toLocaleUpperCase()}`).on('value',res=>{
             data=[];
             res.forEach(shot => {
                 // let key = shot.key
                 // let value = shot.val()
-                // console.log(key ,value)
+                // console.log(key ,value) 
                 data.push(shot.val()) 
             })
             // console.log(data)
@@ -55,7 +57,7 @@ componentDidMount() {
                     <img  className="image is-128x128" src={url_logo} alt='img'/>
             </div>
             <div className="App">
-                <h4 className="title is-3">Profile</h4>
+                <div className="title_profile"><i className="far fa-user-circle"></i>&nbsp;&nbsp;Profile</div>
             </div>
         <div className="detail">
             <div className="title_detail">
