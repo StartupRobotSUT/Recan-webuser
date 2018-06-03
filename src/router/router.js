@@ -10,9 +10,9 @@ class Routes extends React.Component{
 		return (
 			<div>
 				<Switch>
-				    	<Route exact path={'/'} component={Info}/>
-                    	<Route exact path={'/login'} component={Login}/>
-                    	<Route exact path={'/signup'} component={Signup}/>
+				    	<Route exact path={'/'}  component={Info}/>
+                    	<Route exact path={'/login'}  component={Login}/>
+                    	<Route exact path={'/signup'}   component={Signup}/>
                     	<Route exact path={'/user/profile/:uid'} component={Profile}/>
 						<Route component={Info}/>
 				</Switch>

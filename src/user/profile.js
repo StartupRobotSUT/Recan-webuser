@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types'
 import './user.css'
-
 import firebase from 'firebase'
 import {ref} from '../config/firebase'
 import {signOut} from '../config/user_manage'
@@ -61,7 +59,7 @@ componentDidMount() {
             </div>
         <div className="detail">
             <div className="title_detail">
-                <i className="fas fa-user"></i><b>&nbsp;&nbsp;Full Name&nbsp;&nbsp;</b><b>{data[1]}</b>
+                <i className="fas fa-user"></i><b>&nbsp;&nbsp;&nbsp;&nbsp;</b><b>{data[1]}</b>
             </div>
             <div className="title_detail">
                     <i className="fas fa-star"></i><b>&nbsp;&nbsp;Points&nbsp;&nbsp;</b>{data[3]} <b>&nbsp;&nbsp;&nbsp;point</b>

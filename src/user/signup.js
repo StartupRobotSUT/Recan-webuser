@@ -33,14 +33,14 @@ haadleInputChange(event){
         }else{
             this.setState({
                 [name]: value
-              });
+            });
         }
      }
-    handleClick(){
+handleClick(){
        let error ={}
        let { student_id,password} =this.state
        if(this.state.student_id.trim()==="") error.student_id ="! student is empty";
-       if(this.state.type==="นักศึกษา"&&this.state.student_id.toLocaleUpperCase()[0]!=='B')error.student_id ="! student not format";
+       if(this.state.type==="นักศึกษา"&&this.state.student_id.trim().toLocaleUpperCase()[0]!=='B')error.student_id ="! student not format";
        if(this.state.type==="นักศึกษา"&&this.state.student_id.length!==8)error.student_id ="! student not format";
        if(this.state.password==="")error.password="! password is empty";
        if(this.state.type!=="นักศึกษา"&&this.state.student_id.length<5)error.student_id="! username shorted!!"
@@ -49,12 +49,10 @@ haadleInputChange(event){
        if(this.state.type==="สถานะผู้ใช้งาน")error.type="! type not select";
        if(this.state.type==="")error.type="! type not select";
        this.setState({error})
-    //    console.log(`${this.state.student_id}@recan.ac.th`)
-    //      toLowerCase();
        const inValid = Object.keys(error).length===0
        if(inValid){
            let email = `${student_id.trim().toLocaleUpperCase()}@recan.ac.th`
-        authEmail(email,password).then(user=>{
+    authEmail(email,password).then(user=>{
             ref.child(`users/${this.state.student_id.trim().toLocaleUpperCase()}`).set({
                 fullname:this.state.fullname.trim(),
                 cash:0,
@@ -65,17 +63,14 @@ haadleInputChange(event){
                 console.log("Sign SCCUSS!!")
                 this.setState({done:true})
             })
-            //   console.log(user.user.uid)
-        }).catch(err=>{
+    }).catch(err=>{
             let error ={}
-            // console.log(err.code)
             error.password="password or student id match";
             this.setState({error})
             if(err.code==='')
                 console.log("logined")
             else if (err.code==='auth/user-not-found'){
                  console.log(err.code)
-                // this.props.history.push('/login')
                 return;
             }else if(err.code==='auth/email-already-in-use'){
                 error.password="Student ID already in use";
