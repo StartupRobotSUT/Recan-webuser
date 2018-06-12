@@ -4,6 +4,7 @@ import Info from '../info'
 import  Login from '../user/login'
 import  Signup from '../user/signup'
 import Profile from '../user/profile'
+import ChangePointToHous from '../user/change'
 // import NotFound from './404not'
 class Routes extends React.Component{
 	render(){
@@ -14,6 +15,7 @@ class Routes extends React.Component{
                     	<Route exact path={'/login'}  component={Login}/>
                     	<Route exact path={'/signup'}   component={Signup}/>
                     	<Route exact path={'/user/profile/:uid'} component={Profile}/>
+						<Route exact path={'/user/change/:uid'} component={ChangePointToHous}/>
 						<Route component={Info}/>
 				</Switch>
 			</div>

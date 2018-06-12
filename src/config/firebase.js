@@ -1,6 +1,5 @@
 import firebase from 'firebase'
 var config = {
-  
 
   };
   export const app = firebase.initializeApp(config)

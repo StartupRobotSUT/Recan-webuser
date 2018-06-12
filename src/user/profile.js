@@ -3,7 +3,7 @@ import './user.css'
 import firebase from 'firebase'
 import {ref} from '../config/firebase'
 import {signOut} from '../config/user_manage'
-
+import {Link} from 'react-router-dom'
 class Profile extends Component {
 constructor(props){
     super(props)
@@ -69,12 +69,13 @@ componentDidMount() {
             </div>
             <div className="title_detail">
                 <i className="fas fa-clock"></i><b>&nbsp;&nbsp;Hours&nbsp;&nbsp;</b>{data[2]} <b>&nbsp;&nbsp;&nbsp;H</b>
-            </div>
+            </div> 
+                 <Link to={`/user/change/${this.state.uid.trim()}`}><a className="btnetxt button is-success is-rounded"><i className="fas fa-exchange-alt"></i>&nbsp;&nbsp;Change Point to Hours</a></Link>
         </div>
+               <a  onClick={this.SignOut} className="button is-danger is-outlined">LOGOUT</a>  
+        <br/><br/>
          </div>
-         <br/>
-         <br/>
-         <a  onClick={this.SignOut} className="button is-danger is-outlined">LOGOUT</a>
+        
       </div>
     );
   }

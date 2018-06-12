@@ -8,6 +8,14 @@
     font: bold;
     font-size: 20px;
 }
+.noti2{
+    float: left;
+    font: bold;
+    font-size: 20px;
+}
+.btnetxt{
+    font-size: 25px;
+}
 .layout_login{
     width: 25%;
     margin-top: 7%;
@@ -15,8 +23,19 @@
     margin-right:37.5%;
      /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
 }
+.layout_logins{
+    width: 40%;
+    margin-top: 1%;
+    margin-left: 30%;
+    margin-right:30%;
+    margin-bottom: 3%;
+     /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
+}
 .sle{
     width: 500px;
+}
+.title_cha{
+    font-size: 50px;
 }
 .title_profile{
     font-size: 50px;
@@ -87,8 +106,22 @@
         color: darkslategray;
     
     }
+    .title_cha{
+        font-size: 20px;
+    }
+    .noti{
+        float: left;
+        color: red;
+        font: bold;
+        font-size: 15px;
+    }
+    .noti2{
+        float: left;
+        font: bold;
+        font-size: 15px;
+    }
 }
-/* @media only screen and (max-width: 600px) {
+/* @media only screen and (max-width: 800px) {
     .logo_login{
         margin-left: 0%;
         margin-right: 0%;
@@ -130,11 +163,23 @@
         font: bold;
         font-size: 12px;
     }
+    .noti2{
+        float: left;
+        font: bold;
+        font-size: 12px;
+    }
     .title_profile{
-        font-size: 22px;
+        font-size: 20px;
         font: bold;
         color: darkslategray;
     }
+    .title_cha{
+        font-size: 18px;
+    }
+    .btnetxt{
+        font-size: 12px;
+    }
+   
 }
 @media only screen and (min-width: 600px) {
 
@@ -164,6 +209,8 @@
         color: darkslategray;
     
     }
+
+    
 } 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
