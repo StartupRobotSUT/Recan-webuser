@@ -65,7 +65,7 @@ handleClick(){
             })
     }).catch(err=>{
             let error ={}
-            error.password="password or student id match";
+            error.password="password or student doesn't match";
             this.setState({error})
             if(err.code==='')
                 console.log("logined")

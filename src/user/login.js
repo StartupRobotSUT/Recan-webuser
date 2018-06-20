@@ -52,7 +52,7 @@ handleClick(){
         //   console.log(user.user.uid)
     }).catch(err=>{
         let error ={}
-        error.password="password or username id match";
+        error.password="password or username id doesn't match";
         this.setState({error})
         if(err.code==='')
         	console.log("logined")
