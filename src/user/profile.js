@@ -13,7 +13,8 @@ constructor(props){
         cash:0,
         hours:0,
         point:0,
-        data:[]
+        data:[],
+        change:false
     }
     this.SignOut = this.SignOut.bind(this)
 }
@@ -44,6 +45,20 @@ componentDidMount() {
 	} else { 
 	       this.props.history.push('/login')
    }
+//   let cont = 0 
+//    ref.child(`users/`).on( 'value' ,res => {
+//      res.forEach(shot => {
+//         cont++   
+//      })
+//      console.log(cont)
+//    })
+    ref.child('Systems/change').on('value', res => {
+        //  console.log(res.val())
+         if(res.val() === 1)
+            this.setState({change:true})
+        else if(res.val() === 0) 
+           this.setState({change:false})
+    })
 }
   render() {
     const {data} = this.state
@@ -70,7 +85,7 @@ componentDidMount() {
             <div className="title_detail">
                 <i className="fas fa-clock"></i><b>&nbsp;&nbsp;Hours&nbsp;&nbsp;</b>{data[2]} <b>&nbsp;&nbsp;&nbsp;H</b>
             </div> 
-                 <Link to={`/user/change/${this.state.uid.trim()}`}><a className="btnetxt button is-success is-rounded"><i className="fas fa-exchange-alt"></i>&nbsp;&nbsp;Change Point to Hours</a></Link>
+                { this.state.change ? <Link to={`/user/change/${this.state.uid.trim()}`}><a className="btnetxt button is-success is-rounded"><i className="fas fa-exchange-alt"></i>&nbsp;&nbsp;Change Point to Hours</a></Link> : ""}
         </div>
                <a  onClick={this.SignOut} className="button is-danger is-outlined">LOGOUT</a>  
         <br/><br/>

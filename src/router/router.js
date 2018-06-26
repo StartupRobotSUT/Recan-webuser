@@ -4,9 +4,25 @@ import Info from '../info'
 import  Login from '../user/login'
 import  Signup from '../user/signup'
 import Profile from '../user/profile'
+import {ref} from '../config/firebase'
 import ChangePointToHous from '../user/change'
 // import NotFound from './404not'
 class Routes extends React.Component{
+	constructor(props){
+		super(props);
+		this.state ={
+			change:false
+		}
+	}
+	componentDidMount(){
+		ref.child('Systems/change').on('value', res => {
+			//  console.log(res.val())
+			 if(res.val() === 1)
+				this.setState({change:true})
+			else if(res.val() === 0) 
+			   this.setState({change:false})
+		})
+	}
 	render(){
 		return (
 			<div>
@@ -15,7 +31,7 @@ class Routes extends React.Component{
                     	<Route  path={'/login'}  component={Login}/>
                     	<Route  path={'/signup'}   component={Signup}/>
                     	<Route exact path={'/user/profile/:uid'} component={Profile}/>
-						<Route exact path={'/user/change/:uid'} component={ChangePointToHous}/>
+						{ this.state.change ? <Route exact path={'/user/change/:uid'} component={ChangePointToHous}/> : "" }
 						<Route component={Info}/>
 				</Switch>
 			</div>
