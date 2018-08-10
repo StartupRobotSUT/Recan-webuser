@@ -8,3 +8,6 @@ export function  singInEmail(email,pass) {
 export function  signOut() {
 	return firebaseAuth.signOut()
 }
+export function resetPassword(email){
+	return firebaseAuth.sendPasswordResetEmail(email)
+}

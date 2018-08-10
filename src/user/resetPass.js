@@ -1,10 +1,10 @@
 import React from 'react'
 import {Link,Redirect} from 'react-router-dom'
 import './user.css'
-import {ref} from '../config/firebase'
-import {singInEmail} from '../config/user_manage'
+// import {ref} from '../config/firebase'
+import {resetPassword} from '../config/user_manage'
 let url_logo = require('../img/logo.jpg')
-class Login extends React.Component{
+class resetPass extends React.Component{
     constructor(props){
       super(props)
       this.state={
@@ -36,43 +36,39 @@ haadleInputChange(event){
  }
 handleClick(){
    let error ={}
-   let { student_id,password} =this.state
    if(this.state.email==="") error.student_id ="! email is empty";
-//    if(this.state.student_id.toLocaleUpperCase()[0]!=='B')error.student_id ="! student not format";
-//    if(this.state.student_id.length!==8)error.student_id ="! student not format";
-   if(this.state.password==="")error.password="! password is empty";
-   if(this.state.password.length<6)error.password="! password is short"
    this.setState({error})
 //    console.log(`${this.state.student_id}@recan.ac.th`)
 //      toLowerCase();
    const inValid = Object.keys(error).length===0
    if(inValid){
-       let email = this.state.email
-    singInEmail(email,password.trim()).then(user=>{
-        ref.child(`relations/${user.user.uid}`).on('value',res=>{
-            this.setState({student_id:res.val()}) 
-            console.log("LOGIN SCCUSS!!")
-            this.setState({done:true})
-        })
-       
-        //   console.log(user.user.uid)
-    }).catch(err=>{
-        let error ={}
-        error.password="password or username id doesn't match";
-        this.setState({error})
-        if(err.code==='')
-        	console.log("logined")
-        else if (err.code==='auth/user-not-found'){
-            // console.log(err.code)
-			this.props.history.push('/login')
-        	return;
-        }
-   })
-   }
-  
- }
+      resetPassword(this.state.email).then(()=>{
+        console.log("LOGIN SCCUSS!!")
+        this.setState({done:true})
+      }).catch((err)=>{
+          console.log(err)
+      })
+    }
+}
     render(){
-       
+        const Form_con =(
+	 	   <div className="layout_login">
+            <div className="logo_login">
+                <figure className="image is-128x128">
+                    <img src={url_logo} alt='img'/>
+                </figure>
+           
+            </div>
+             <h4 className="title is-4"><b>Reset Password</b></h4>
+             <h4 className="title is-5">Check your email</h4>
+				 <p className="field" style={{textAlign:'center'}}>
+	 			    <Link to={'/signup'} ><a><u>Sign Up</u></a></Link>
+				 </p>
+                 <p className="field" style={{textAlign:'center'}}>
+	 			    <Link to={'/login'} ><a><u>LOGIN</u></a></Link>
+				 </p>
+	 		</div>
+	 		)
         const Form =(
 	 	   <div className="layout_login">
             <div className="logo_login">
@@ -81,7 +77,7 @@ handleClick(){
                 </figure>
            
             </div>
-             <h4 className="title is-4"><b>LOGIN RECAN</b></h4>
+             <h4 className="title is-4"><b>Reset Password</b></h4>
 	 			<p className="field is-center">
 	 				<input  className="input is-success"
 	 				    	type="email" 
@@ -93,32 +89,21 @@ handleClick(){
                     <span className="noti">{this.state.error.student_id}</span>
 	 			</p>
 				
-	 			<p className="field" >
-	 				<input 	className="input is-success"
-	 				        type="password" 
-                            name="password"
-                            value={this.state.password}
-	 						placeholder="Password"
- 							onChange={this.haadleInputChange}
-	 						/>
-							 <span className="noti">{this.state.error.password}</span>
-	 			</p>
 	 			<p className="field" style={{textAlign:'center'}}>
                   <br/>
-	 			    <a  className="button is-info" onClick={this.handleClick}><b>LOGIN</b></a>
+	 			    <a  className="button is-info" onClick={this.handleClick}><b>Send</b></a>
 	 			</p>
 				 <p className="field" style={{textAlign:'center'}}>
 	 			<Link to={'/signup'} ><a><u>Sign Up</u></a></Link>
-                 <p><Link to={'/resetpassword'} ><a><u>Reset Password</u></a></Link></p>
 				 </p>
 	 		</div>
 	 		)
         return(
             <div className="login">
-                {this.state.done?<Redirect to={`/user/profile/${this.state.student_id.trim()}`}/>:Form}
+                {this.state.done?Form_con:Form}
                
             </div>
         )
     }
 }
-export default Login
+export default resetPass

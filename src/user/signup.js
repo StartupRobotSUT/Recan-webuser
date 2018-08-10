@@ -13,8 +13,10 @@ class Signup extends React.Component{
             error:{},
             fullname:'',
             type:'',
+            email:'',
             typer:['สถานะผู้ใช้งาน','นักศึกษา','บุคลากร','อาจารย์'],
-            done:false
+            done:false,
+            check_user:false
         }
         this.haadleInputChange = this.haadleInputChange.bind(this)
         this.handleClick = this.handleClick.bind(this)
@@ -36,6 +38,7 @@ haadleInputChange(event){
             });
         }
      }
+
 handleClick(){
        let error ={}
        let { student_id,password} =this.state
@@ -46,37 +49,79 @@ handleClick(){
        if(this.state.type!=="นักศึกษา"&&this.state.student_id.length<5)error.student_id="! username shorted!!"
        if(this.state.password.length<6)error.password="! password is short (6-10)";
        if(this.state.fullname.trim()==="")error.fullname="! fullname is empty";
+       if(this.state.email.trim()==="")error.email = "! Email is empty"
        if(this.state.type==="สถานะผู้ใช้งาน")error.type="! type not select";
        if(this.state.type==="")error.type="! type not select";
        this.setState({error})
        const inValid = Object.keys(error).length===0
        if(inValid){
-           let email = `${student_id.trim().toLocaleUpperCase()}@recan.ac.th`
-    authEmail(email,password).then(user=>{
-            ref.child(`users/${this.state.student_id.trim().toLocaleUpperCase()}`).set({
-                fullname:this.state.fullname.trim(),
-                cash:0,
-                hours:0,
-                point:0,
-                type:this.state.type
-            }).then(()=>{
-                console.log("Sign SCCUSS!!")
-                this.setState({done:true})
+         const email = this.state.email.trim()
+         ref.child('users').once('value',  res=>{ 
+              res.forEach(shot=>{
+                //   console.log(shot.key)
+                  if(shot.key === student_id.trim()){
+                      console.log('update')
+                      this.setState({check_user:true})
+                  }
+              })
+               if(this.state.check_user){
+                //update
+                 authEmail(email,password).then(user => {
+                    //  console.log(user)
+                     ref.child(`relations/${user.user.uid}`).set(student_id.trim().toLocaleUpperCase()).then(()=>{
+                        ref.child(`users/${this.state.student_id.trim().toLocaleUpperCase()}`).update({
+                            fullname:this.state.fullname.trim()
+                        }).then(()=>{
+                            console.log("Sign SCCUSS!!")
+                            this.setState({done:true})
+                        })
+                        
+                     }).catch(err=>{
+                        let error ={}
+                        error.password="password or student doesn't match";
+                        this.setState({error})
+                        if(err.code==='')
+                            console.log("logined")
+                        else if (err.code==='auth/user-not-found'){
+                            console.log(err.code)
+                            return;
+                        }else if(err.code==='auth/email-already-in-use'){
+                            error.password="Student ID already in use";
+                            this.setState({error})
+                        }
+                    })
+                 })
+               }else{
+                //create
+                authEmail(email,password).then(user => {
+                    ref.child(`relations/${user.user.uid}`).set(student_id.trim().toLocaleUpperCase())
+                    ref.child(`users/${this.state.student_id.trim().toLocaleUpperCase()}`).set({
+                        fullname:this.state.fullname.trim(),
+                        cash:0,
+                        hours:0,
+                        point:0,
+                        type:this.state.type
+                    }).then(()=>{
+                        console.log("Sign SCCUSS!!")
+                        this.setState({done:true})
+                    })
+                    }).catch(err=>{
+                            let error ={}
+                            error.password="password or student doesn't match";
+                            this.setState({error})
+                            if(err.code==='')
+                                console.log("logined")
+                            else if (err.code==='auth/user-not-found'){
+                                console.log(err.code)
+                                return;
+                            }else if(err.code==='auth/email-already-in-use'){
+                                error.password="Student ID already in use";
+                                this.setState({error})
+                            }
+                    })
+                }
             })
-    }).catch(err=>{
-            let error ={}
-            error.password="password or student doesn't match";
-            this.setState({error})
-            if(err.code==='')
-                console.log("logined")
-            else if (err.code==='auth/user-not-found'){
-                 console.log(err.code)
-                return;
-            }else if(err.code==='auth/email-already-in-use'){
-                error.password="Student ID already in use";
-                this.setState({error})
-            }
-       })
+   
     }
 }
     render(){
@@ -89,7 +134,7 @@ handleClick(){
                 type="text" 
                name="student_id"
                value={this.state.student_id}
-               placeholder="StudentID"
+               placeholder="รหัสนักศึกษา"
                onChange={this.haadleInputChange}
                    />			 
        <span className="noti">{this.state.error.student_id}</span>
@@ -120,7 +165,7 @@ handleClick(){
 	 				    	type="text" 
                             name="fullname"
                             value={this.state.fullname}
-                            placeholder="Enter Fullname"
+                            placeholder="Fullname"
                             onChange={this.haadleInputChange}
 	 				   		/>			 
                     <span className="noti">{this.state.error.fullname}</span>
@@ -139,7 +184,17 @@ handleClick(){
                     </div> 
                     <span className="noti">{this.state.error.type}</span>
                 </p>
-	 			{this.state.type==="นักศึกษา"?student:ohter}
+                 {this.state.type==="นักศึกษา"?student:ohter}
+                 <p className="field" >
+	 				<input 	className="input is-success"
+	 				        type="email" 
+                            name="email"
+                            value={this.state.email}
+	 						placeholder="email"
+ 							onChange={this.haadleInputChange}
+	 						/>
+							 <span className="noti">{this.state.error.email}</span>
+	 			</p>
 	 			<p className="field" >
 	 				<input 	className="input is-success"
 	 				        type="password" 

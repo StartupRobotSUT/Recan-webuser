@@ -2,6 +2,8 @@ import React from 'react';
 import firebase from 'firebase'
 import {ref} from '../config/firebase'
 import {Link} from 'react-router-dom'
+let info1 = require('../img/info.jpg')
+let info2 = require('../img/info_2.jpg')
 class ChangePointToHous extends React.Component{
     constructor(props){
         super(props);
@@ -50,8 +52,12 @@ componentDidMount() {
                 data.push(shot.val()) 
             })
            // console.log(data)
-           this.setState({data:data,point:data[3],hours:parseInt(data[3]/70)})
-
+           this.setState({data:data,point:data[3]})
+           if(parseInt(data[3]/70) > 10)
+              this.setState({hours:10})
+           else 
+              this.setState({hours:parseInt(data[3]/70)}) 
+             
         })
        
 	} else { 
@@ -64,18 +70,25 @@ handleClick(){
     if(this.state.hours===''||this.state.hours==='0')error.hours ="! empty hours"
     if(parseInt(data[3])/70 < 1)error.hours = "! Point not enough"
     if(parseInt(data[3])/70  < this.state.hours)error.hours= "! hours over flow"
+    if(parseInt(data[2]) > 9) error.hours ="! full hours , you has 10 hours" 
     this.setState({error})
     const inValid = Object.keys(error).length===0
+  
+
     if(inValid){
         const hours = parseInt(data[2]) + this.state.hours
-        ref.child(`users/${this.state.uid.trim().toLocaleUpperCase()}/hours`).set(hours).then(()=>{
-            const point = parseInt(data[3]) - (this.state.hours*70)
-            ref.child(`users/${this.state.uid.trim().toLocaleUpperCase()}/point`).set(point).then(()=>{
-                    console.log("Sign SCCUSS!!")
-                    this.setState({done:true})
-                    this.props.history.push(`/user/profile/${this.state.uid.trim()}`)
-        })
-    })
+        if(hours < 11){
+                ref.child(`users/${this.state.uid.trim().toLocaleUpperCase()}/hours`).set(hours).then(()=>{
+                    const point = parseInt(data[3]) - (this.state.hours*70)
+                    ref.child(`users/${this.state.uid.trim().toLocaleUpperCase()}/point`).set(point).then(()=>{
+                            console.log("Sign SCCUSS!!")
+                            this.setState({done:true})
+                            this.props.history.push(`/user/profile/${this.state.uid.trim()}`)
+                })
+            })
+            }else{
+                 error.hours ="! full hours" 
+            }
     }
     
 }
@@ -92,6 +105,8 @@ handleClick(){
                                 Change Point to Hours</div> 
                     <div><b>Your point :&nbsp;{data[3]}&nbsp;point</b></div>
                     <div><b>70 point =  1 hours</b></div>
+                    <div><b>Max hours =  10 hours</b></div>
+                    <div><b>hours you has:&nbsp;{data[2]}&nbsp;hours</b></div>
                     <div className="layout_logins">
                    
                     <div className="field">
@@ -128,6 +143,8 @@ handleClick(){
                          &nbsp;&nbsp;
                          <Link to={`/user/profile/${this.state.uid.trim()}`}><a className="button is-danger"><b>Cancel</b></a></Link>
                     <br/> <br/> 
+                    <img  className='bg' src={info1} alt='img'/>
+                    <img  className='bg' src={info2} alt='img'/>
                 </div>
                
 			</div>
